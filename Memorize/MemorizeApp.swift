@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@main
+@main //
 struct MemorizeApp: App {
     var body: some Scene {
         WindowGroup {
