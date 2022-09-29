@@ -6,14 +6,26 @@
 //
 
 import SwiftUI
+let emojis1 = ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎",
+              "🚓", "🚑", "🚒", "🚐", "🛻", "🚚",
+              "🚛", "🚜"]
+let emojis2 = ["🍏", "🍎", "🍐", "🍊", "🍋", "🍌",
+               "🍉", "🍇", "🍓", "🫐", "🍈", "🍒",
+               "🍑", "🥭", "🍍", "🥥", "🥝", "🍅",
+               "🍆", "🥑"]
+let emojis3 = ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾",
+               "🏐", "🏉", "🥏", "🎱", "🪀", "🏓",
+               "🏸", "🏒", "🏑", "🥍"]
 
 struct ContentView: View {
-    var emojis = ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎"
-    , "🚓", "🚑", "🚒", "🚐", "🛻", "🚚", "🚛", "🚜"]
+    
+    @State var emojis = emojis1
+    
     @State var emojiCount = 4
     var body: some View {
         
         VStack{
+            Text("Memorize!").font(.largeTitle).padding(.all)
             ScrollView{
                 // Card Stack
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
@@ -26,37 +38,77 @@ struct ContentView: View {
             .padding(.horizontal)
             .foregroundColor(.red)
             Spacer()
-            
-            // Button Stack
-            HStack{
-                remove
-                Spacer()
-                add
+            HStack {
+                theme1
+                Spacer(minLength: 15)
+                theme2
+                Spacer(minLength: 15)
+                theme3
             }
             .padding(.horizontal)
+            .foregroundColor(.blue)
+            
         }
     
     }
-     
-    var add: some View {
-        Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
-        } label: {
-            Image(systemName: "plus.circle").font(.largeTitle)
-        }
-    }
     
-    var remove: some View {
-        Button{
-            if emojiCount > 1 {
-                emojiCount -= 1
+    
+    // Theme change buttons
+    var theme1: some View {
+        VStack{
+            
+            Button {
+                emojis = emojis1.shuffled()
+                emojiCount = Int.random(in: 4...emojis.count)
+            } label: {
+                Image(systemName: "car").font(.largeTitle)
             }
-        } label: {
-            Image(systemName: "minus.circle").font(.largeTitle)
+            Text("Vehicles")
         }
     }
+    var theme2: some View {
+        VStack{
+            
+            Button {
+                emojis = emojis2.shuffled()
+                emojiCount = Int.random(in: 4...emojis.count)
+            } label: {
+                Image(systemName: "questionmark.square").font(.largeTitle)
+            }
+            Text("Fruits")
+        }
+    }
+    var theme3: some View {
+        VStack{
+            
+            Button {
+                emojis = emojis3.shuffled()
+                emojiCount = Int.random(in: 4...emojis.count)
+            } label: {
+                Image(systemName: "sportscourt").font(.largeTitle)
+            }
+            Text("Sports")
+        }
+    }
+//    var add: some View {
+//        Button {
+//            if emojiCount < emojis.count {
+//                emojiCount += 1
+//            }
+//        } label: {
+//            Image(systemName: "plus.circle").font(.largeTitle)
+//        }
+//    }
+//
+//    var remove: some View {
+//        Button{
+//            if emojiCount > 1 {
+//                emojiCount -= 1
+//            }
+//        } label: {
+//            Image(systemName: "minus.circle").font(.largeTitle)
+//        }
+//    }
 }
 
 
