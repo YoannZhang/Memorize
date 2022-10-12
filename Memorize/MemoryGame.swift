@@ -15,19 +15,21 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
     private(set) var score = 0
     
     mutating func choose(_  card: Card) {
-        
+        let currentTime = Date.now
+        var chosenTime = currentTime
         // find chosen card via id
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
            !cards[chosenIndex].isFaceUp,
            !cards[chosenIndex].isMatched
         {
+            let interval = currentTime.timeIntervalSince(chosenTime)
             if let potentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
                 // check if chosen card and faced up card has same content
                 if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                     // true, then isMatched to true
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
-                    score += 2
+                    score += max(10 - Int(interval), 1)
                 } else {
                     // not matched
                     if cards[chosenIndex].isSeen || cards[potentialMatchIndex].isSeen {
@@ -46,6 +48,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
                 // chosen card should be the one need to face up
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
+            chosenTime = currentTime
             cards[chosenIndex].isFaceUp = true
         }
     }
@@ -79,4 +82,17 @@ struct Theme {
     var emojis: [String]
     var numberOfPairsOfCards: Int
     var color: String
+    var gradient = true
+    init(name: String, emojis: [String], numberOfPairsOfCards: Int, color: String) {
+        self.name = name
+        self.emojis = emojis
+        self.numberOfPairsOfCards = numberOfPairsOfCards
+        self.color = color
+    }
+    init(name: String, emojis: [String], color: String) {
+        self.name = name
+        self.emojis = emojis
+        self.numberOfPairsOfCards = emojis.count
+        self.color = color
+    }
 }

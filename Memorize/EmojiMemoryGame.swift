@@ -69,8 +69,12 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     static func createMemorygame(ofTheme chosenTheme: Theme) -> MemoryGame<String> {
-        let numberOfPairsOfCards = chosenTheme.numberOfPairsOfCards
+        var numberOfPairsOfCards = chosenTheme.numberOfPairsOfCards
         
+        // create random pairs of cards for vehicle and ball theme
+        if chosenTheme.name == "vehicle" || chosenTheme.name == "ball" {
+            numberOfPairsOfCards = Int.random(in: 4...chosenTheme.emojis.count)
+        }
         return MemoryGame(numberOfPairsOfCards: numberOfPairsOfCards) { chosenTheme.emojis[$0] }
     }
     
