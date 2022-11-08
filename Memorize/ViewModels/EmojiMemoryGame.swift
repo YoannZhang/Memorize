@@ -12,7 +12,7 @@ final class EmojiMemoryGame: ObservableObject {
     
     typealias Card = MemoryGame<String>.Card
     private struct GameConstants {
-        static let numberOfPairsOfCard = 10
+        static let numberOfPairsOfCards = 10
     }
     
     private static let vehicleEmojis = ["🚋", "🚌", "🚎", "🚐", "🚑", "🚒",
@@ -20,7 +20,7 @@ final class EmojiMemoryGame: ObservableObject {
                      "🚛", "🚜"]
     
     private static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame(numberOfPairsOfCard: GameConstants.numberOfPairsOfCard) { pairIndex in
+        MemoryGame(numberOfPairsOfCards: GameConstants.numberOfPairsOfCards) { pairIndex in
             vehicleEmojis[pairIndex]
         }
     }
